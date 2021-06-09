@@ -4,10 +4,19 @@ export PATH
 pyenv_bin=/www/server/panel/pyenv/bin
 rep_path=${pyenv_bin}:$PATH
 
+#===================
+# the configuration
+#===================
+
 mtype=$1
 actionType=$2
 name=$3
 version=$4
+
+#===================
+
+
+
 . /www/server/panel/install/public.sh
 serverUrl=$NODE_URL/install
 

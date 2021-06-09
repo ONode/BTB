@@ -1,6 +1,6 @@
 # coding: utf-8
 # +-------------------------------------------------------------------
-# | 宝塔Linux面板 
+# | 宝塔Linux面板
 # +-------------------------------------------------------------------
 # | Copyright (c) 2015-2099 宝塔软件(http://bt.cn) All rights reserved.
 # +-------------------------------------------------------------------
@@ -12,6 +12,7 @@ import os
 import time
 import re
 import uuid
+
 if not os.name in ['nt']:
     os.chdir('/www/server/panel')
 if not 'class/' in sys.path:
@@ -157,7 +158,7 @@ def request_check():
         if public.md5(auth.username.strip() + tips) != app.config['BASIC_AUTH_USERNAME'] \
                 or public.md5(auth.password.strip() + tips) != app.config['BASIC_AUTH_PASSWORD']:
             return send_authenticated()
-    
+
     if not request.path in ['/safe', '/hook', '/public', '/mail_sys', '/down']:
         ip_check = public.check_ip_panel()
         if ip_check: return ip_check
@@ -173,13 +174,13 @@ def request_check():
         if request.args.get('action') in not_networks:
             return public.returnJson(False, 'INIT_REQUEST_CHECK_LOCAL_ERR'), json_header
 
-    if request.path in ['/','/site','/ftp','/database','/soft','/control','/firewall','/files','/xterm','/crontab','/config']:
+    if request.path in ['/', '/site', '/ftp', '/database', '/soft', '/control', '/firewall', '/files', '/xterm', '/crontab', '/config']:
         licenes = 'data/licenes.pl'
         if request.path in ['/'] and not os.path.exists(licenes):
             return
-            
-        if not public.is_bind():
-            return redirect('/bind',302)
+
+        #if not public.is_bind():
+        #    return redirect('/bind', 302)
 
 
 # Flask 请求结束勾子
@@ -209,6 +210,7 @@ def notfound(e):
         "Content-Type": "text/html"
     }
     return Response(errorStr, status=404, headers=headers)
+
 
 # ===================================Flask HOOK========================#
 
@@ -252,8 +254,8 @@ def xterm():
     import ssh_terminal
     ssh_host_admin = ssh_terminal.ssh_host_admin()
     defs = (
-    'get_host_list', 'get_host_find', 'modify_host', 'create_host', 'remove_host', 'set_sort', 'get_command_list',
-    'create_command', 'get_command_find', 'modify_command', 'remove_command')
+        'get_host_list', 'get_host_find', 'modify_host', 'create_host', 'remove_host', 'set_sort', 'get_command_list',
+        'create_command', 'get_command_find', 'modify_command', 'remove_command')
     return publicObject(ssh_host_admin, defs, None)
 
 
@@ -261,7 +263,7 @@ def xterm():
 def bind():
     comReturn = comm.local()
     if comReturn: return comReturn
-    if public.is_bind(): return redirect('/',302)
+    if public.is_bind(): return redirect('/', 302)
     data = {}
     g.title = '请先绑定宝塔帐号'
     return render_template('bind.html', data=data)
@@ -271,6 +273,7 @@ def bind():
 def work_order(ws):
     comReturn = comm.local()
     if comReturn: return comReturn
+
 
 @sockets.route('/webssh')
 def webssh(ws):
@@ -320,6 +323,7 @@ def webssh(ws):
         ws.close()
     return 'False'
 
+
 @app.route('/site', methods=method_all)
 def site(pdata=None):
     # 网站管理
@@ -342,27 +346,27 @@ def site(pdata=None):
     siteObject = panelSite.panelSite()
 
     defs = (
-    'upload_csv', 'create_website_multiple', 'del_redirect_multiple', 'del_proxy_multiple', 'delete_dir_auth_multiple',
-    'delete_dir_bind_multiple', 'delete_domain_multiple', 'set_site_etime_multiple',
-    'set_site_php_version_multiple', 'delete_website_multiple', 'set_site_status_multiple', 'get_site_domains',
-    'GetRedirectFile', 'SaveRedirectFile', 'DeleteRedirect', 'GetRedirectList', 'CreateRedirect', 'ModifyRedirect',
-    'set_dir_auth', 'delete_dir_auth', 'get_dir_auth', 'modify_dir_auth_pass', 'export_domains', 'import_domains',
-    'GetSiteLogs', 'GetSiteDomains', 'GetSecurity', 'SetSecurity', 'ProxyCache', 'CloseToHttps', 'HttpToHttps',
-    'SetEdate','get_site_errlog',
-    'SetRewriteTel', 'GetCheckSafe', 'CheckSafe', 'GetDefaultSite', 'SetDefaultSite', 'CloseTomcat', 'SetTomcat',
-    'apacheAddPort',
-    'AddSite', 'GetPHPVersion', 'SetPHPVersion', 'DeleteSite', 'AddDomain', 'DelDomain', 'GetDirBinding',
-    'AddDirBinding', 'GetDirRewrite',
-    'DelDirBinding', 'get_site_types', 'add_site_type', 'remove_site_type', 'modify_site_type_name', 'set_site_type',
-    'UpdateRulelist',
-    'SetSiteRunPath', 'GetSiteRunPath', 'SetPath', 'SetIndex', 'GetIndex', 'GetDirUserINI', 'SetDirUserINI',
-    'GetRewriteList', 'SetSSL',
-    'SetSSLConf', 'CreateLet', 'CloseSSLConf', 'GetSSL', 'SiteStart', 'SiteStop', 'Set301Status', 'Get301Status',
-    'CloseLimitNet', 'SetLimitNet',
-    'GetLimitNet', 'RemoveProxy', 'GetProxyList', 'GetProxyDetals', 'CreateProxy', 'ModifyProxy', 'GetProxyFile',
-    'SaveProxyFile', 'ToBackup',
-    'DelBackup', 'GetSitePHPVersion', 'logsOpen', 'GetLogsStatus', 'CloseHasPwd', 'SetHasPwd', 'GetHasPwd', 'GetDnsApi',
-    'SetDnsApi')
+        'upload_csv', 'create_website_multiple', 'del_redirect_multiple', 'del_proxy_multiple', 'delete_dir_auth_multiple',
+        'delete_dir_bind_multiple', 'delete_domain_multiple', 'set_site_etime_multiple',
+        'set_site_php_version_multiple', 'delete_website_multiple', 'set_site_status_multiple', 'get_site_domains',
+        'GetRedirectFile', 'SaveRedirectFile', 'DeleteRedirect', 'GetRedirectList', 'CreateRedirect', 'ModifyRedirect',
+        'set_dir_auth', 'delete_dir_auth', 'get_dir_auth', 'modify_dir_auth_pass', 'export_domains', 'import_domains',
+        'GetSiteLogs', 'GetSiteDomains', 'GetSecurity', 'SetSecurity', 'ProxyCache', 'CloseToHttps', 'HttpToHttps',
+        'SetEdate', 'get_site_errlog',
+        'SetRewriteTel', 'GetCheckSafe', 'CheckSafe', 'GetDefaultSite', 'SetDefaultSite', 'CloseTomcat', 'SetTomcat',
+        'apacheAddPort',
+        'AddSite', 'GetPHPVersion', 'SetPHPVersion', 'DeleteSite', 'AddDomain', 'DelDomain', 'GetDirBinding',
+        'AddDirBinding', 'GetDirRewrite',
+        'DelDirBinding', 'get_site_types', 'add_site_type', 'remove_site_type', 'modify_site_type_name', 'set_site_type',
+        'UpdateRulelist',
+        'SetSiteRunPath', 'GetSiteRunPath', 'SetPath', 'SetIndex', 'GetIndex', 'GetDirUserINI', 'SetDirUserINI',
+        'GetRewriteList', 'SetSSL',
+        'SetSSLConf', 'CreateLet', 'CloseSSLConf', 'GetSSL', 'SiteStart', 'SiteStop', 'Set301Status', 'Get301Status',
+        'CloseLimitNet', 'SetLimitNet',
+        'GetLimitNet', 'RemoveProxy', 'GetProxyList', 'GetProxyDetals', 'CreateProxy', 'ModifyProxy', 'GetProxyFile',
+        'SaveProxyFile', 'ToBackup',
+        'DelBackup', 'GetSitePHPVersion', 'logsOpen', 'GetLogsStatus', 'CloseHasPwd', 'SetHasPwd', 'GetHasPwd', 'GetDnsApi',
+        'SetDnsApi')
     return publicObject(siteObject, defs, None, pdata)
 
 
@@ -438,75 +442,75 @@ def message(action=None):
     import panelMessage
     message_object = panelMessage.panelMessage()
     defs = (
-    'get_messages', 'get_message_find', 'create_message', 'status_message', 'remove_message', 'get_messages_all')
+        'get_messages', 'get_message_find', 'create_message', 'status_message', 'remove_message', 'get_messages_all')
     return publicObject(message_object, defs, action, None)
 
-@app.route('/colony/<module>/<action>',methods=method_all)
-def colony_route(module = 'index',action = None):
+
+@app.route('/colony/<module>/<action>', methods=method_all)
+def colony_route(module='index', action=None):
     comReturn = comm.local()
     if comReturn: return comReturn
-    if module in ['os','sys','public']:
-        return public.returnJson(False,'指定模块不存在!'),json_header 
+    if module in ['os', 'sys', 'public']:
+        return public.returnJson(False, '指定模块不存在!'), json_header
     act_temp = action.split('.')
     action = act_temp[0]
     if len(act_temp) == 1: act_temp.append('json')
     act_type = act_temp[1].lower()
-    if not act_type in ['json','html','text','txt']:
-        return public.returnJson(False,'不支持的响应格式声明'),json_header
+    if not act_type in ['json', 'html', 'text', 'txt']:
+        return public.returnJson(False, '不支持的响应格式声明'), json_header
 
-    #URI输入检测
-    if module[:2] == '__' or module[-2:] == '__' or not re.match(r"^\w+$",action):
-        return public.returnJson(False,'错误的模块名称!'),json_header
-    
-    if action[:2] == '__' or action[-2:] == '__' or not re.match(r"^\w+$",action):
-        return public.returnJson(False,'错误的方法名称!'),json_header
+    # URI输入检测
+    if module[:2] == '__' or module[-2:] == '__' or not re.match(r"^\w+$", action):
+        return public.returnJson(False, '错误的模块名称!'), json_header
+
+    if action[:2] == '__' or action[-2:] == '__' or not re.match(r"^\w+$", action):
+        return public.returnJson(False, '错误的方法名称!'), json_header
 
     import colony
 
-    #实例化指定模块，并检测模块或方法是否存在
+    # 实例化指定模块，并检测模块或方法是否存在
     if not module in colony.__dict__.keys():
-        return public.returnJson(False,'指定模块不存在!'),json_header
+        return public.returnJson(False, '指定模块不存在!'), json_header
     obj = eval('colony.{module}.{module}()'.format(module=module))
-    act = getattr(obj,action,None)
+    act = getattr(obj, action, None)
     if act is None:
-        return public.returnJson(False,'指定方法不存在!'),json_header
-    #执行指定方法
+        return public.returnJson(False, '指定方法不存在!'), json_header
+    # 执行指定方法
     try:
         result = act(get_input())
     except:
-        return public.get_error_info(),text_header
+        return public.get_error_info(), text_header
 
-    #响应执行结果
+    # 响应执行结果
     result_type = type(result)
-    if result_type in [Response,Resp]:
+    if result_type in [Response, Resp]:
         return result
     try:
         if act_type == 'json':
-            return public.GetJson(result),json_header
+            return public.GetJson(result), json_header
         elif act_type == 'html':
-            template_name = '{}_{}.html'.format(module,action)
+            template_name = '{}_{}.html'.format(module, action)
             template_file = 'BTPanel/templates/colony/{}'.format(template_name)
             if not os.path.exists(template_file):
-                return public.returnJson(False,'没有找到指定模板文件!'),json_header
+                return public.returnJson(False, '没有找到指定模板文件!'), json_header
             try:
-                return render_template(template_name,data=result)
+                return render_template(template_name, data=result)
             except:
-                return public.get_error_info(),text_header
-        elif act_type in ['text','txt']:
+                return public.get_error_info(), text_header
+        elif act_type in ['text', 'txt']:
             try:
                 if result_type == bytes:
                     result = result.decode('utf-8')
-                elif result_type in [int,float,list,dict,tuple]:
+                elif result_type in [int, float, list, dict, tuple]:
                     result = str(result)
-                return result,text_header
+                return result, text_header
             except:
-                return str(result),text_header
+                return str(result), text_header
         else:
-            return public.GetJson(result),json_header
+            return public.GetJson(result), json_header
 
     except:
-        return public.returnJson(False,'错误的响应格式!'),json_header
-
+        return public.returnJson(False, '错误的响应格式!'), json_header
 
 
 @app.route('/api', methods=method_all)
@@ -564,7 +568,7 @@ def ssh_security(pdata=None):
     firewallObject = ssh_security.ssh_security()
     defs = ('san_ssh_security', 'set_password', 'set_sshkey', 'stop_key', 'get_config',
             'stop_password', 'get_key', 'return_ip', 'add_return_ip', 'del_return_ip', 'start_jian', 'stop_jian',
-            'get_jian', 'get_logs','set_root','stop_root')
+            'get_jian', 'get_logs', 'set_root', 'stop_root')
     return publicObject(firewallObject, defs, None, pdata)
 
 
@@ -662,10 +666,10 @@ def files(pdata=None):
             'UploadFile', 'GetDir', 'CreateFile', 'CreateDir', 'DeleteDir', 'DeleteFile', 'get_download_url_list',
             'remove_download_url', 'modify_download_url',
             'CopyFile', 'CopyDir', 'MvFile', 'GetFileBody', 'SaveFileBody', 'Zip', 'UnZip', 'get_download_url_find',
-            'set_file_ps','CreateLink',
+            'set_file_ps', 'CreateLink',
             'SearchFiles', 'upload', 'read_history', 're_history', 'auto_save_temp', 'get_auto_save_body', 'get_videos',
             'GetFileAccess', 'SetFileAccess', 'GetDirSize', 'SetBatchData', 'BatchPaste', 'install_rar',
-            'get_path_size','get_file_attribute','get_file_hash',
+            'get_path_size', 'get_file_attribute', 'get_file_hash',
             'DownloadFile', 'GetTaskSpeed', 'CloseLogs', 'InstallSoft', 'UninstallSoft', 'SaveTmpFile',
             'get_composer_version', 'exec_composer', 'update_composer',
             'GetTmpFile', 'del_files_store', 'add_files_store', 'get_files_store', 'del_files_store_types',
@@ -747,25 +751,25 @@ def config(pdata=None):
 
     import config
     defs = (
-    'set_file_deny', 'del_file_deny', 'get_file_deny',
-    'get_ols_private_cache_status', 'get_ols_value', 'set_ols_value', 'get_ols_private_cache', 'get_ols_static_cache',
-    'set_ols_static_cache', 'switch_ols_private_cache', 'set_ols_private_cache',
-    'set_coll_open', 'get_qrcode_data', 'check_two_step', 'set_two_step_auth', 'create_user', 'remove_user',
-    'modify_user',
-    'get_key', 'get_php_session_path', 'set_php_session_path', 'get_cert_source', 'get_users',
-    'set_local', 'set_debug', 'get_panel_error_logs', 'clean_panel_error_logs', 'get_menu_list', 'set_hide_menu_list',
-    'get_basic_auth_stat', 'set_basic_auth', 'get_cli_php_version', 'get_tmp_token', 'get_temp_login', 'set_temp_login',
-    'remove_temp_login', 'clear_temp_login', 'get_temp_login_logs',
-    'set_cli_php_version', 'DelOldSession', 'GetSessionCount', 'SetSessionConf', 'show_recommend', 'show_workorder',
-    'GetSessionConf', 'get_ipv6_listen', 'set_ipv6_status', 'GetApacheValue', 'SetApacheValue',
-    'GetNginxValue', 'SetNginxValue', 'get_token', 'set_token', 'set_admin_path', 'is_pro',
-    'get_php_config', 'get_config', 'SavePanelSSL', 'GetPanelSSL', 'GetPHPConf', 'SetPHPConf',
-    'GetPanelList', 'AddPanelInfo', 'SetPanelInfo', 'DelPanelInfo', 'ClickPanelInfo', 'SetPanelSSL',
-    'SetTemplates', 'Set502', 'setPassword', 'setUsername', 'setPanel', 'setPathInfo', 'setPHPMaxSize',
-    'getFpmConfig', 'setFpmConfig', 'setPHPMaxTime', 'syncDate', 'setPHPDisable', 'SetControl',
-    'ClosePanel', 'AutoUpdatePanel', 'SetPanelLock', 'return_mail_list', 'del_mail_list', 'add_mail_address',
-    'user_mail_send', 'get_user_mail', 'set_dingding', 'get_dingding', 'get_settings', 'user_stmp_mail_send',
-    'user_dingding_send','get_login_send','set_login_send','clear_login_send','get_login_log','login_ipwhite'
+        'set_file_deny', 'del_file_deny', 'get_file_deny',
+        'get_ols_private_cache_status', 'get_ols_value', 'set_ols_value', 'get_ols_private_cache', 'get_ols_static_cache',
+        'set_ols_static_cache', 'switch_ols_private_cache', 'set_ols_private_cache',
+        'set_coll_open', 'get_qrcode_data', 'check_two_step', 'set_two_step_auth', 'create_user', 'remove_user',
+        'modify_user',
+        'get_key', 'get_php_session_path', 'set_php_session_path', 'get_cert_source', 'get_users',
+        'set_local', 'set_debug', 'get_panel_error_logs', 'clean_panel_error_logs', 'get_menu_list', 'set_hide_menu_list',
+        'get_basic_auth_stat', 'set_basic_auth', 'get_cli_php_version', 'get_tmp_token', 'get_temp_login', 'set_temp_login',
+        'remove_temp_login', 'clear_temp_login', 'get_temp_login_logs',
+        'set_cli_php_version', 'DelOldSession', 'GetSessionCount', 'SetSessionConf', 'show_recommend', 'show_workorder',
+        'GetSessionConf', 'get_ipv6_listen', 'set_ipv6_status', 'GetApacheValue', 'SetApacheValue',
+        'GetNginxValue', 'SetNginxValue', 'get_token', 'set_token', 'set_admin_path', 'is_pro',
+        'get_php_config', 'get_config', 'SavePanelSSL', 'GetPanelSSL', 'GetPHPConf', 'SetPHPConf',
+        'GetPanelList', 'AddPanelInfo', 'SetPanelInfo', 'DelPanelInfo', 'ClickPanelInfo', 'SetPanelSSL',
+        'SetTemplates', 'Set502', 'setPassword', 'setUsername', 'setPanel', 'setPathInfo', 'setPHPMaxSize',
+        'getFpmConfig', 'setFpmConfig', 'setPHPMaxTime', 'syncDate', 'setPHPDisable', 'SetControl',
+        'ClosePanel', 'AutoUpdatePanel', 'SetPanelLock', 'return_mail_list', 'del_mail_list', 'add_mail_address',
+        'user_mail_send', 'get_user_mail', 'set_dingding', 'get_dingding', 'get_settings', 'user_stmp_mail_send',
+        'user_dingding_send', 'get_login_send', 'set_login_send', 'clear_login_send', 'get_login_log', 'login_ipwhite'
     )
     return publicObject(config.config(), defs, None, pdata)
 
@@ -834,9 +838,9 @@ def ssl(pdata=None):
     import panelSSL
     toObject = panelSSL.panelSSL()
     defs = ('check_url_txt', 'RemoveCert', 'renew_lets_ssl', 'SetCertToSite', 'GetCertList', 'SaveCert', 'GetCert',
-            'GetCertName', 'again_verify','cancel_cert_order','get_cert_admin','apply_order_ca',
+            'GetCertName', 'again_verify', 'cancel_cert_order', 'get_cert_admin', 'apply_order_ca',
             'DelToken', 'GetToken', 'GetUserInfo', 'GetOrderList', 'GetDVSSL', 'Completed', 'SyncOrder',
-            'download_cert', 'set_cert', 'cancel_cert_order','ApplyDVSSL','apply_cert_order_pay',
+            'download_cert', 'set_cert', 'cancel_cert_order', 'ApplyDVSSL', 'apply_cert_order_pay',
             'get_order_list', 'get_order_find', 'apply_order_pay', 'get_pay_status', 'apply_order', 'get_verify_info',
             'get_verify_result', 'get_product_list', 'set_verify_info',
             'GetSSLInfo', 'downloadCRT', 'GetSSLProduct', 'Renew_SSL', 'Get_Renew_SSL')
@@ -872,12 +876,12 @@ def plugin(pdata=None):
     import panelPlugin
     pluginObject = panelPlugin.panelPlugin()
     defs = (
-    'set_score', 'get_score', 'update_zip', 'input_zip', 'export_zip', 'add_index', 'remove_index', 'sort_index',
-    'install_plugin', 'uninstall_plugin', 'get_soft_find', 'get_index_list', 'get_soft_list', 'get_cloud_list',
-    'check_deps', 'flush_cache', 'GetCloudWarning', 'install', 'unInstall', 'getPluginList', 'getPluginInfo',
-    'get_make_args', 'add_make_args',
-    'getPluginStatus', 'setPluginStatus', 'a', 'getCloudPlugin', 'getConfigHtml', 'savePluginSort', 'del_make_args',
-    'set_make_args')
+        'set_score', 'get_score', 'update_zip', 'input_zip', 'export_zip', 'add_index', 'remove_index', 'sort_index',
+        'install_plugin', 'uninstall_plugin', 'get_soft_find', 'get_index_list', 'get_soft_list', 'get_cloud_list',
+        'check_deps', 'flush_cache', 'GetCloudWarning', 'install', 'unInstall', 'getPluginList', 'getPluginInfo',
+        'get_make_args', 'add_make_args',
+        'getPluginStatus', 'setPluginStatus', 'a', 'getCloudPlugin', 'getConfigHtml', 'savePluginSort', 'del_make_args',
+        'set_make_args')
     return publicObject(pluginObject, defs, None, pdata)
 
 
@@ -901,7 +905,7 @@ def auth(pdata=None):
     if comReturn: return comReturn
     import panelAuth
     toObject = panelAuth.panelAuth()
-    defs = ('get_plugin_remarks','get_re_order_status_plugin', 'create_plugin_other_order', 'get_order_stat',
+    defs = ('get_plugin_remarks', 'get_re_order_status_plugin', 'create_plugin_other_order', 'get_order_stat',
             'get_voucher_plugin', 'create_order_voucher_plugin', 'get_product_discount_by',
             'get_re_order_status', 'create_order_voucher', 'create_order', 'get_order_status',
             'get_voucher', 'flush_pay_status', 'create_serverid', 'check_serverid',
@@ -992,7 +996,7 @@ def login():
     if admin_path != '/bt' and os.path.exists(admin_path_file) and not 'admin_auth' in session:
         is_auth_path = True
     num_key = public.md5(public.GetClientIp() + '_auth_path')
-    #if not public.get_error_num(num_key, 20): return '连续20次安全入口验证失败，禁止1小时'
+    # if not public.get_error_num(num_key, 20): return '连续20次安全入口验证失败，禁止1小时'
     # 登录输入验证
     if request.method == method_post[0]:
         v_list = ['username', 'password', 'code', 'vcode', 'cdn_url']
@@ -1105,7 +1109,7 @@ def tips():
 @app.route('/get_app_bind_status', methods=method_all)
 def get_app_bind_status(pdata=None):
     # APP绑定状态查询
-    if not public.check_app('app_bind'):return public.returnMsg(False, '未开启API')
+    if not public.check_app('app_bind'): return public.returnMsg(False, '未开启API')
     import panelApi
     api_object = panelApi.panelApi()
     return json.dumps(api_object.get_app_bind_status(get_input())), json_header
@@ -1114,7 +1118,7 @@ def get_app_bind_status(pdata=None):
 @app.route('/check_bind', methods=method_all)
 def check_bind(pdata=None):
     # APP绑定查询
-    if not public.check_app('app_bind'):return public.returnMsg(False, '未开启API')
+    if not public.check_app('app_bind'): return public.returnMsg(False, '未开启API')
     import panelApi
     api_object = panelApi.panelApi()
     return json.dumps(api_object.check_bind(get_input())), json_header
@@ -1178,7 +1182,6 @@ def down(token=None, fname=None):
                 if re.match(r"^\d+$", args.file_password):
                     args.file_password = str(int(args.file_password))
                     args.file_password += ".0"
-                    
 
                 if args.file_password != str(find['password']):
                     return public.ReturnJson(False, '密码错误-2!'), json_header
@@ -1242,20 +1245,20 @@ def panel_public():
         if panelWaf_data.is_xss(get.__dict__): return 'ERROR'
     except:
         pass
-    
-    #获取ping测试
+
+    # 获取ping测试
     if 'get_ping' in get:
         try:
             import panelPing
             p = panelPing.Test()
             get = p.check(get)
             if not get: return 'ERROR'
-            result = getattr(p,get['act'])(get)
+            result = getattr(p, get['act'])(get)
             result_type = type(result)
             if str(result_type).find('Response') != -1: return result
-            return public.getJson(result),json_header
+            return public.getJson(result), json_header
         except:
-            return public.returnJson(False,public.get_error_info())
+            return public.returnJson(False, public.get_error_info())
 
     if len("{}".format(get.__dict__)) > 1024 * 32:
         return 'ERROR'
@@ -1282,9 +1285,9 @@ def panel_public():
             if admin_path != '/bt' and os.path.exists(admin_path_file) and not 'admin_auth' in session:
                 return 'False'
 
-        #验证是否绑定了设备
+        # 验证是否绑定了设备
         if not get.fun in ['blind']:
-            if not public.check_app('app'):return public.returnMsg(False,'未绑定用户!')
+            if not public.check_app('app'): return public.returnMsg(False, '未绑定用户!')
         import wxapp
         pluwx = wxapp.wxapp()
         checks = pluwx._check(get)
@@ -1364,9 +1367,9 @@ def panel_other(name=None, fun=None, stype=None):
     if name.find('./') != -1 or not re.match(r"^[\w-]+$", name): return abort(404)
     if not name: return public.returnJson(False, 'PLUGIN_INPUT_ERR'), json_header
     p_path = os.path.join('/www/server/panel/plugin/', name)
-    if not os.path.exists(p_path): 
+    if not os.path.exists(p_path):
         if name == 'btwaf' and fun == 'index':
-            return  render_template('error3.html',data={}) 
+            return render_template('error3.html', data={})
         return abort(404)
 
     # 是否响插件应静态文件
@@ -1401,7 +1404,7 @@ def panel_other(name=None, fun=None, stype=None):
             plu = eval('plugin_main.' + name + '_main()')
             if not hasattr(plu, fun):
                 if name == 'btwaf' and fun == 'index':
-                    return  render_template('error3.html',data={}) 
+                    return render_template('error3.html', data={})
                 return public.returnJson(False, 'PLUGIN_NOT_FUN'), json_header
 
         # 执行插件方法
@@ -1655,7 +1658,6 @@ def publicObject(toObject, defs, action=None, get=None):
     if hasattr(get, 'dfile'):
         get.dfile = get.dfile.replace('//', '/').replace('\\', '/')
         get.dfile = public.xssdecode(get.dfile)
-    
 
     if hasattr(toObject, 'site_path_check'):
         if not toObject.site_path_check(get): return public.ReturnJson(False, 'INIT_ACCEPT_NOT'), json_header
@@ -1810,17 +1812,19 @@ def is_login(result):
 
 
 def is_bind():
-    pass
     #if os.path.exists(bind_pl):
     #    os.remove(bind_pl)
-        
+    pass
+
+
 # js随机数模板使用，用于不更新版本号时更新前端文件不需要用户强制刷新浏览器
 def get_js_random():
     js_random = public.readFile('data/js_random.pl')
     if not js_random or js_random == '1':
         js_random = public.GetRandomString(16)
-    public.writeFile('data/js_random.pl',js_random)
+    public.writeFile('data/js_random.pl', js_random)
     return js_random
+
 
 # 获取输入数据
 def get_input():
@@ -1883,24 +1887,23 @@ def check_token(data):
     return result
 
 
-
 # ======================公共方法区域END============================#
 
 
 # workorder load code
 
-@app.route('/workorder/<action>',methods=method_all)
+@app.route('/workorder/<action>', methods=method_all)
 def workorder(action, pdata=None):
-
     comReturn = comm.local()
     if comReturn: return comReturn
 
     import panelWorkorder
     toObject = panelWorkorder.panelWorkorder()
 
-    defs = ("get_user_info","close", "create", "list", "get_messages", "allow")
+    defs = ("get_user_info", "close", "create", "list", "get_messages", "allow")
     result = publicObject(toObject, defs, action, pdata)
     return result
+
 
 @sockets.route('/workorder_client')
 def workorder_client(ws):
