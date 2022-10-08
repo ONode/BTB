@@ -2,7 +2,7 @@
 clear
 echo; echo 'Installing BT patch 7.+'; echo
 
-RELEASE_TAG=0.1001
+RELEASE_TAG=7.6.203
 FILE1=https://cdn.jsdelivr.net/gh/ONode/BTB@$RELEASE_TAG/BTPanel/static/js/index.js
 FILE2=https://cdn.jsdelivr.net/gh/ONode/BTB@$RELEASE_TAG/BTPanel/__init__.py
 FILE3=https://cdn.jsdelivr.net/gh/ONode/BTB@$RELEASE_TAG/BTPanel/templates/default/bind.html
