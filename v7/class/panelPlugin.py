@@ -997,7 +997,8 @@ class panelPlugin:
         import panelMessage #引用消息提醒模块
         pm = panelMessage.panelMessage()
         pm.remove_message_level(level) #删除旧的提醒
-        if expire_day > 15: return False
+        # if expire_day > 15: return False
+
         if pm.is_level(level): #是否忽略
             if level != name: #到期还是即将到期
                 msg_last = '您的【{}】授权还有{}天到期'.format(title,int(expire_day) + 1)
@@ -1008,7 +1009,8 @@ class panelPlugin:
                 pl_msg = 'false'
             renew_msg = '<a class="btlink" onclick="bt.soft.product_pay_view({name:\'%s\',pid:%s,limit:\'%s\',plugin:%s,renew:%s});">立即续费</a>' % (title,pid,name,pl_msg,endtime)
             pm.create_message(level=level,expire=7,msg="{}，为了不影响您正常使用【{}】功能，请及时续费，{}".format(msg_last,title,renew_msg))
-            return True
+            return False
+
         return False
         
     #到期提醒
@@ -1035,7 +1037,7 @@ class panelPlugin:
             level,expire_day = self.get_level_msg('pro',s_time,data['pro'])
             self.add_expire_msg('专业版',level,'pro',expire_day,100000030,data['pro'])
             pm.remove_message_level('ltd')
-            is_plugin = False
+            # is_plugin = False
         
         return True
 
@@ -1231,7 +1233,7 @@ class panelPlugin:
         p_list = self.get_cloud_list(args)
         for p in p_list['list']:
             if p['name'] == get.name:
-                if p_list['pro'] < 0 and p['endtime'] < 0: return False
+                #if p_list['pro'] < 0 and p['endtime'] < 0: return False
                 break
 
         args.type = '10'
@@ -1239,7 +1241,7 @@ class panelPlugin:
         for p in p_list['list']:
             if p['name'] == get.name:
                 if not 'endtime' in p: continue
-                if p['endtime'] < 0: return False
+                #if p['endtime'] < 0: return False
                 break
 
         args.type = '12'
@@ -1248,7 +1250,7 @@ class panelPlugin:
             if not p['type'] in [12,'12']: continue
             if p['name'] == get.name:
                 if not 'endtime' in p: continue
-                if p_list['ltd'] < 1 and p['endtime'] < 1: return False
+                #if p_list['ltd'] < 1 and p['endtime'] < 1: return False
                 break
         return True
 

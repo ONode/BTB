@@ -592,9 +592,14 @@ class panelPlugin:
 
     #检查权限
     def check_accept(self,get):
+
+
         args = public.dict_obj()
         args.type = '8'
         p_list = self.get_cloud_list(args)
+
+        return True
+
         for p in p_list['list']:
             if p['name'] == get.name:
                 if p_list['pro'] < 0 and p['endtime'] < 0: return False

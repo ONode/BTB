@@ -1413,14 +1413,14 @@ class ajax:
         import panelPlugin
         plu_panel =  panelPlugin.panelPlugin()
         plugin_list = plu_panel.get_cloud_list()
-        if not 'pro' in plugin_list: plugin_list['pro'] = -1
-        
+        # if not 'pro' in plugin_list: plugin_list['pro'] = -1
+        plugin_list['pro'] = 1
         for item in data:
             if 'list' in item:
                 item['list'] = self.__get_home_list(item['list'],item['type'],plugin_list,plu_panel)    
                 if item['type'] == 1:
                     if len(item['list']) > 4: item['list'] = item['list'][:4]    
-            if item['type'] == 0 and plugin_list['pro'] >= 0:
+            if item['type'] == 0 or plugin_list['pro'] >= 0:
                 item['show'] = False                    
         return data
 
