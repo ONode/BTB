@@ -2,11 +2,11 @@
 clear
 echo; echo 'Installing BT patch 6.+'; echo
 
-RELEASE_TAG=0.1001
-FILE1=https://cdn.jsdelivr.net/gh/ONode/BTB@$RELEASE_TAG/BTPanel/static/js/index.js
-FILE2=https://cdn.jsdelivr.net/gh/ONode/BTB@$RELEASE_TAG/BTPanel/__init__.py
-FILE3=https://cdn.jsdelivr.net/gh/ONode/BTB@$RELEASE_TAG/BTPanel/templates/default/bind.html
-FILE4=https://cdn.jsdelivr.net/gh/ONode/BTB@$RELEASE_TAG/BTPanel/templates/default/layout.html
+RELEASE_TAG=7.6.205
+FILE1=https://cdn.jsdelivr.net/gh/ONode/BTB@$RELEASE_TAG/v6/BTPanel/static/js/index.js
+FILE2=https://cdn.jsdelivr.net/gh/ONode/BTB@$RELEASE_TAG/v6/BTPanel/__init__.py
+FILE3=https://cdn.jsdelivr.net/gh/ONode/BTB@$RELEASE_TAG/v6/BTPanel/templates/default/bind.html
+FILE4=https://cdn.jsdelivr.net/gh/ONode/BTB@$RELEASE_TAG/v6/BTPanel/templates/default/layout.html
 BASE_PANEL=/www/server/panel
 
 echo 'Searching for the working version'

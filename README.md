@@ -1,6 +1,6 @@
 #### Installation and fix bugs
 
-Latest tag `7.6.203`
+Latest tag `7.6.205`
 
 ##### 使用手册：http://docs.bt.cn
 ##### 论坛地址：https://www.bt.cn/bbs
@@ -17,3 +17,11 @@ yum install -y wget && wget -O install.sh http://download.bt.cn/install/install_
 ```bash
 wget -O install.sh http://download.bt.cn/install/install-ubuntu_6.0.sh && sudo bash install.sh
 ```
+
+#### One Line
+
+##### V6 
+`wget -q -O - https://cdn.jsdelivr.net/gh/ONode/BTB@7.6.205/patchv6.sh | bash`
+
+##### V7
+`wget -q -O - https://cdn.jsdelivr.net/gh/ONode/BTB@7.6.205/patchv7.sh | bash`
