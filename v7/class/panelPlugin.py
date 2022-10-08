@@ -918,8 +918,8 @@ class panelPlugin:
         '''
 
         user_info_file = self.__panel_path + '/data/userInfo.json'
-        if not os.path.exists(user_info_file):
-            raise public.PanelError('请先绑定宝塔帐号!')
+        #if not os.path.exists(user_info_file):
+        #    raise public.PanelError('请先绑定宝塔帐号!')
         return True
 
     #从云端取列表
